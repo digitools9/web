@@ -1,0 +1,53 @@
+{% extends 'digitools/base.html' %}
+
+{% block title %}Digitools - Image to Image{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-dark">Image to Image Converter</h1>
+        <p class="text-muted">Convert your image to another format easily</p>
+    </div>
+
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 600px;">
+        <div class="card-body p-4">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Select Image</label>
+                    <input type="file" class="form-control" name="image" required accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Convert To</label>
+                    <select name="target_format" class="form-select" required>
+                        <option value="PNG">PNG</option>
+                        <option value="JPEG">JPEG</option>
+                        <option value="WEBP">WEBP</option>
+                        <option value="BMP">BMP</option>
+                        <option value="TIFF">TIFF</option>
+                    </select>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Convert</button>
+                </div>
+            </form>
+
+            {% if error %}
+                <div class="alert alert-danger mt-3">{{ error }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if converted_image %}
+        <div class="card shadow-sm border-0 mx-auto mt-4" style="max-width: 600px;">
+            <div class="card-body text-center">
+                <h5 class="mb-3">Converted Image</h5>
+                <img src="{{ converted_image }}" class="img-fluid rounded shadow mb-3" style="max-height: 300px;">
+                <a href="{{ converted_image }}" download class="btn btn-success w-100">Download Converted Image</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

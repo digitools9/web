@@ -1,0 +1,37 @@
+{% extends 'digitools/base.html' %}
+
+{% block title %}Digitools - QR Generator{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-dark">QR Code Generator</h1>
+        <p class="text-muted">Create custom QR codes</p>
+    </div>
+
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 600px;">
+        <div class="card-body p-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="qr_text" class="form-label fw-semibold">Enter text or URL</label>
+                    <input type="text" class="form-control" id="qr_text" name="qr_text" value="{{ qr_text }}" required autofocus>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Generate QR Code</button>
+                </div>
+            </form>
+
+            {% if qr_img_base64 %}
+                <div class="text-center mt-4">
+                    <h5 class="fw-semibold">Your QR Code</h5>
+                    <img src="{{ qr_img_base64 }}" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+                    <div class="mt-2">
+                        <a href="{{ qr_img_base64 }}" download="qrcode.png" class="btn btn-success">Download</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
