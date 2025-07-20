@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from pypdf import PdfReader, PdfWriter
 from io import BytesIO
-from django.conf import settings
 
 
 def pdf_merge(request):
